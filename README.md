@@ -1,14 +1,25 @@
-# loan-approval-prediction
- Creating a model to predict if a loan application needs to approved or rejected based on a trained model of previous loan approval data .
- This project aims to streamline the loan approval process by providing accurate and reliable predictions based on applicant data.
+# Loan approval prediction
 
-Features
-Data Processing: Efficient handling and preprocessing of applicant data.
-After cleaning the dataset , correlation tests are done to check for the necessary columns to use for the model training and droping unwanted data columns. 
+Decision tree classifier that predicts whether a loan application is approved or rejected. An early learning project, kept as a record.
 
-Machine Learning Model: Implementation of algorithm to predict loan approval status.
-ML model used - Classification type and algorithm is DecisionTreeClassifier .
+## Data
+`loan_approval_dataset.csv` - 4,269 applications, 13 columns (income, loan amount, term, CIBIL score, asset values, education, self-employment) and `loan_status`.
 
-Model Evaluation: Comprehensive evaluation metrics to ensure high accuracy and reliability.
-for checking the accuracy of the model confusion_matrix is used and the accuracy_score is checked . usually if the model is giving above 85% accuracy rate then the model is considered fit to use . 
-Here though this dataset and model we could achive an accuracy score of 95% . 
+## What the script does (`DT1.py`)
+1. Welch ANOVA and Pearson correlation of each feature against `loan_status`.
+2. Drops features with no relationship to approval, keeping the ones that matter (mainly CIBIL score and loan term).
+3. 75/25 train/test split (`random_state=42`).
+4. `DecisionTreeClassifier` (entropy, max depth 3).
+
+## Results (test set, 1,068 rows)
+- Accuracy: 0.955
+- Rejected class: precision 0.93, recall 0.95
+- Approved class: precision 0.97, recall 0.96
+
+The CIBIL score is by far the strongest signal, which is why a depth-3 tree already does this well. This is a well-known, fairly clean Kaggle-style dataset, so high accuracy is expected.
+
+## Run it
+```
+pip install -r requirements.txt
+python DT1.py
+```
